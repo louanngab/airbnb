@@ -1,0 +1,21 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1>Logements populaires · Le Cap</h1>
+    <a href="#">Voir plus</a>
+  </div>
+
+  <div class="row mt-3 overflow-auto flex-nowrap" style="white-space: nowrap;">
+    <% 6.times do |i| %>
+      <div class="col-3 me-3" style="min-width: 250px;">
+        <div class="card shadow-sm">
+          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="flat">
+          <div class="card-body">
+            <p class="badge bg-light text-dark mb-2">Coup de cœur voyageurs</p>
+            <h5 class="card-title">Appartement • Le Cap</h5>
+            <p class="card-text">83 € pour 2 nuits · ⭐️ 4,94</p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

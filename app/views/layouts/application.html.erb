@@ -23,6 +23,14 @@
   </head>
 
   <body>
-    <%= yield %>
-  </body>
+  <% if controller_name == 'pages' && action_name == 'home' %>
+    <%= render "shared/navbar_homepage" %>
+  <% elsif devise_controller? %>
+    <%= render "shared/navbar_user" %>
+  <% else %>
+    <%= render "shared/navbar" %>
+  <% end %>
+
+  <%= yield %>
+</body>
 </html>
