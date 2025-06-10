@@ -15,9 +15,9 @@
 
     <!-- Menu utilisateur -->
     <div class="d-flex align-items-center gap-4">
-      <%= link_to "Logements", "#", class: "nav-link text-dark fw-semibold" %>
-      <%= link_to "Expériences", "#", class: "nav-link text-dark" %>
-      <%= link_to "Services", "#", class: "nav-link text-dark" %>
+      <%= link_to "Logements", pages_logements_path, class: "nav-link text-dark fw-semibold" %>
+      <%= link_to "Expériences", pages_experiences_path, class: "nav-link text-dark" %>
+      <%= link_to "Services", pages_services_path, class: "nav-link text-dark" %>
 
       <% if user_signed_in? %>
         <%= link_to "Déconnexion", destroy_user_session_path, method: :delete, class: "btn btn-outline-dark" %>
@@ -27,4 +27,3 @@
     </div>
   </div>
 </nav>
-

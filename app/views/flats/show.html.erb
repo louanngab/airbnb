@@ -1,0 +1,11 @@
+<div class="container my-5">
+  <%= link_to "← Retour aux logements", flats_path, class: "btn btn-outline-secondary mb-4" %>
+
+  <h1 class="mb-3"><%= @flat.name %></h1>
+  <img src="<%= @flat.photo_url %>" alt="<%= @flat.name %>" class="img-fluid rounded shadow-sm mb-4">
+
+  <p><strong>Adresse :</strong> <%= @flat.address %></p>
+  <p><strong>Prix :</strong> <%= @flat.price_per_night %> € par nuit</p>
+  <p><strong>Note :</strong> ⭐ <%= @flat.rating %></p>
+  <p><strong>Description :</strong><br><%= @flat.description %></p>
+</div>
