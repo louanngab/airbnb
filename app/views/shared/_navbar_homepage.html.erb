@@ -1,0 +1,30 @@
+<nav class="navbar navbar-light bg-white shadow-sm py-3 mb-4">
+  <div class="container d-flex justify-content-between align-items-center">
+    <!-- Logo -->
+    <%= link_to image_tag("https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg", height: 30), root_path, class: "navbar-brand" %>
+
+    <!-- Zone de recherche -->
+    <form class="flex-grow-1 mx-4" style="max-width: 600px;">
+      <div class="input-group rounded-pill shadow-sm overflow-hidden">
+        <input type="search" class="form-control border-0" placeholder="Rechercher une destination, date, etc..." aria-label="Search">
+        <button class="btn btn-danger px-3" type="submit">
+          🔍
+        </button>
+      </div>
+    </form>
+
+    <!-- Menu utilisateur -->
+    <div class="d-flex align-items-center gap-4">
+      <%= link_to "Logements", "#", class: "nav-link text-dark fw-semibold" %>
+      <%= link_to "Expériences", "#", class: "nav-link text-dark" %>
+      <%= link_to "Services", "#", class: "nav-link text-dark" %>
+
+      <% if user_signed_in? %>
+        <%= link_to "Déconnexion", destroy_user_session_path, method: :delete, class: "btn btn-outline-dark" %>
+      <% else %>
+        <%= link_to "Connexion", new_user_session_path, class: "btn btn-outline-secondary" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
+
