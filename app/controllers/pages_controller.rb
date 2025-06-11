@@ -1,8 +1,10 @@
 class PagesController < ApplicationController
   def home
+    @flats = Flat.all
+    #@flat = Flat.find(params[:id])
   end
 
-  def logements
+  def cabane
   end
 
   def experiences
