@@ -17,11 +17,13 @@
       <%= link_to "Cabane", pages_cabane_path, class: "nav-link text-dark fw-semibold" %>
       <%= link_to "Expériences", pages_experiences_path, class: "nav-link text-dark" %>
       <%= link_to "Services", pages_services_path, class: "nav-link text-dark" %>
+      <%= link_to "Ajouter une cabane", new_flat_path, class: "btn btn-outline-dark" %>
+
 
       <% if user_signed_in? %>
         <%= link_to "Déconnexion", destroy_user_session_path, method: :delete, class: "btn btn-outline-dark" %>
       <% else %>
-        <%= link_to "Connexion", new_user_session_path, class: "btn btn-outline-secondary" %>
+        <%= link_to "Connexion", new_user_session_path, class: "btn btn-outline-dark" %>
       <% end %>
     </div>
   </div>
