@@ -1,0 +1,49 @@
+<div class="container my-5">
+  <h1 class="mb-4 fw-bold">Ajouter une nouvelle cabane</h1>
+
+  <%= simple_form_for @flat, html: { multipart: true } do |f| %>
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.input :name,
+                    label: "Nom de la cabane",
+                    placeholder: "Ex. Cabane dans les bois",
+                    input_html: { class: "form-control" } %>
+
+        <%= f.input :address,
+                    label: "Adresse",
+                    placeholder: "Ex. Chamonix, France",
+                    input_html: { class: "form-control" } %>
+
+        <%= f.input :description,
+                    label: "Description",
+                    input_html: { rows: 5, class: "form-control" } %>
+
+        <%= f.input :price_per_night,
+                    label: "Prix par nuit (€)",
+                    input_html: { class: "form-control", type: "number", min: 0 } %>
+
+        <%= f.input :rating,
+                    label: "Note (ex: 4.8)",
+                    input_html: { class: "form-control", step: 0.1, min: 0, max: 5 } %>
+      </div>
+
+      <div class="col-md-6">
+        <%= f.input :photo,
+                    as: :file,
+                    label: "Télécharger une photo",
+                    input_html: { class: "form-control" } %>
+
+        <div class="text-muted small my-2">ou</div>
+
+        <%= f.input :photo_url,
+                    label: "URL de la photo (optionnel)",
+                    input_html: { class: "form-control" } %>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <%= f.button :submit, "Créer la cabane", class: "btn btn-dark" %>
+    </div>
+  <% end %>
+</div>
+

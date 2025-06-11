@@ -5,31 +5,26 @@
   </div>
 </div>
 
-
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center">
-    <h1>Logements populaires · Le Cap</h1>
-    <a href="#">Voir plus</a>
-  </div>r
-
-  <div class="row mt-3 overflow-auto flex-nowrap" style="white-space: nowrap;">
-  <% if @flats.nil? %>
-  <p>Aucun logement trouvé.</p>
-<% else %>
-    <% @flats.each do |flat| %>
-  <div class="col-md-4">
-    <div class="card mb-4 shadow-sm">
-      <% if flat.photo.attached? %>
-        <%= image_tag flat.photo, class: "card-img-top" %>
+<div class="container-fluid px-4">
+  <div class="d-flex flex-row flex-wrap justify-content-center gap-4 py-4">
+    <% if @flats.nil? || @flats.empty? %>
+      <p class="text-muted">Aucun logement trouvé.</p>
+    <% else %>
+      <% @flats.each do |flat| %>
+        <div class="card shadow-sm" style="width: 300px;">
+          <% if flat.photo.attached? %>
+            <%= image_tag flat.photo, class: "card-img-top", style: "height: 180px; object-fit: cover;" %>
+          <% end %>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title"><%= flat.name %></h5>
+            <p class="card-text text-muted mb-3">
+              <%= truncate(flat.description, length: 100, separator: ' ') %>
+            </p>
+            <%= link_to "Voir la cabane", flat_path(flat), class: "btn btn-dark mt-auto" %>
+          </div>
+        </div>
       <% end %>
-      <div class="card-body">
-        <h5><%= flat.name %></h5>
-        <p><%= truncate(flat.description, length: 100) %></p>
-        <%= link_to "Voir la cabane", flat_path(flat), class: "btn btn-dark" %>
-      </div>
-    </div>
-  </div>
-  <% end %>
-<% end %>
+    <% end %>
   </div>
 </div>
+

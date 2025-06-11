@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :host do
+    get "flats/new"
+    get "flats/create"
+  end
   root "pages#home"
 
   get "pages/home"
@@ -14,5 +18,5 @@ Rails.application.routes.draw do
   # (PWA - désactivé pour l’instant)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-  resources :flats, only: [:index, :show]
+  resources :flats
 end

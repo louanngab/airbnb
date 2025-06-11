@@ -1,18 +1,19 @@
 <div class="container my-5">
   <h1 class="mb-4 fw-bold">Nos cabanes</h1>
 
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    <% 6.times do %>
-      <div class="col">
-        <div class="card shadow-sm">
-          <img src="https://source.unsplash.com/random/400x250/?apartment" class="card-img-top" alt="Appartement">
-          <div class="card-body">
-            <h5 class="card-title">Cabane à Le Cap</h5>
-            <p class="card-text">83 € pour 2 jours • ⭐ 4,94</p>
-            <a href="#" class="btn btn-outline-primary btn-sm">Voir la cabane</a>
-          </div>
-        </div>
+<% @flats.each do |flat| %>
+  <div class="col">
+    <div class="card shadow-sm">
+      <% if flat.photo.attached? %>
+        <%= image_tag flat.photo.variant(resize_to_limit: [800, 400]), class: "card-img-top" %>
+      <% else %>
+        <%= image_tag flat.photo_url, class: "card-img-top" %>
+      <% end %>
+      <div class="card-body">
+        <h5 class="card-title"><%= flat.name %></h5>
+        <p class="card-text"><%= flat.price_per_night %> € par nuit • ⭐ <%= flat.rating %></p>
+        <%= link_to "Voir la cabane", flat_path(flat), class: "btn btn-dark" %>
       </div>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
