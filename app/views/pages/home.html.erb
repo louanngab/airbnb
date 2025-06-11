@@ -5,17 +5,23 @@
   </div>
 
   <div class="row mt-3 overflow-auto flex-nowrap" style="white-space: nowrap;">
-    <% 6.times do |i| %>
-      <div class="col-3 me-3" style="min-width: 250px;">
-        <div class="card shadow-sm">
-          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="flat">
-          <div class="card-body">
-            <p class="badge bg-light text-dark mb-2">Coup de cœur voyageurs</p>
-            <h5 class="card-title">Appartement • Le Cap</h5>
-            <p class="card-text">83 € pour 2 nuits · ⭐️ 4,94</p>
-          </div>
-        </div>
+  <% if @flats.nil? %>
+  <p>Aucun logement trouvé.</p>
+<% else %>
+    <% @flats.each do |flat| %>
+  <div class="col-md-4">
+    <div class="card mb-4 shadow-sm">
+      <% if flat.photo.attached? %>
+        <%= image_tag flat.photo, class: "card-img-top" %>
+      <% end %>
+      <div class="card-body">
+        <h5><%= flat.name %></h5>
+        <p><%= truncate(flat.description, length: 100) %></p>
+        <%= link_to "Voir la cabane", flat_path(flat), class: "btn btn-dark" %>
       </div>
-    <% end %>
+    </div>
+  </div>
+  <% end %>
+<% end %>
   </div>
 </div>
