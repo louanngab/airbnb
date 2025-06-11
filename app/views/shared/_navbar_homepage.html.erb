@@ -4,14 +4,13 @@
     <%= link_to image_tag("cabaneb-logo.png", height: 100), root_path, class: "navbar-brand" %>
 
     <!-- Zone de recherche -->
-    <form class="flex-grow-1 mx-4" style="max-width: 600px;">
+    <%= form_with url: flats_path, method: :get, local: true, class: "flex-grow-1 mx-4", style: "max-width: 600px;" do |form| %>
       <div class="input-group rounded-pill shadow-sm overflow-hidden">
-        <input type="search" class="form-control border-0" placeholder="Rechercher une destination, date, etc..." aria-label="Search">
-        <button class="btn btn-dark px-3" type="submit">
-          🔍
-        </button>
+        <%= form.search_field :query, class: "form-control border-0", placeholder: "Rechercher une destination, nom, etc..." %>
+        <button class="btn btn-dark px-3" type="submit">🔍</button>
       </div>
-    </form>
+    <% end %>
+
 
     <!-- Menu utilisateur -->
     <div class="d-flex align-items-center gap-4">
