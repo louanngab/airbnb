@@ -1,7 +1,7 @@
 <nav class="navbar navbar-light bg-white shadow-sm py-3 mb-4">
   <div class="container d-flex justify-content-between align-items-center">
     <!-- Logo -->
-    <%= link_to image_tag("https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg", height: 30), root_path, class: "navbar-brand" %>
+    <%= link_to image_tag("cabaneb-logo.png", height: 100), root_path, class: "navbar-brand" %>
 
     <!-- Zone de recherche -->
     <form class="flex-grow-1 mx-4" style="max-width: 600px;">
@@ -15,7 +15,7 @@
 
     <!-- Menu utilisateur -->
     <div class="d-flex align-items-center gap-4">
-      <%= link_to "Logements", pages_logements_path, class: "nav-link text-dark fw-semibold" %>
+      <%= link_to "Cabane", pages_cabane_path, class: "nav-link text-dark fw-semibold" %>
       <%= link_to "Expériences", pages_experiences_path, class: "nav-link text-dark" %>
       <%= link_to "Services", pages_services_path, class: "nav-link text-dark" %>
 
