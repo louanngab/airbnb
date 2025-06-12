@@ -15,14 +15,14 @@ Rails.application.routes.draw do
   # get "pages/flats", to: "pages#flats"
   devise_for :users
 
-    # Healthcheck Rails
-  get "up" => "rails/health#show", as: :rails_health_check
+  resources :reviews, only: [:create]
+
+  resources :flats do
+    resources :reviews, only: [:index, :show, :edit, :update, :destroy]
+    resources :bookings, only: :create
+  end
 
   # (PWA - désactivé pour l’instant)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-  resources :flats
-  resources :flats do
-  resources :bookings, only: :create
-  end
 end

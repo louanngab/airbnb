@@ -1,0 +1,11 @@
+<h2 class="mb-4">What people are saying about our cabanes</h2>
+
+<% @reviews.each do |review| %>
+  <div class="review border p-3 rounded mb-4">
+    <h5><%= review.flat.name %></h5>
+    <p><strong><%= review.user.email %></strong> rated it <%= review.rating %>/5</p>
+    <p><%= review.content %></p>
+    <%= display_stars(review.rating) %>
+
+  </div>
+<% end %>

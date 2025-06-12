@@ -9,6 +9,7 @@ class PagesController < ApplicationController
   end
 
   def experiences
+    @reviews = Review.includes(:user, :flat).order(created_at: :desc)
   end
 
   def services
