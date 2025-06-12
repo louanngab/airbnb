@@ -1,35 +1,108 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="bg-light-sage min-vh-100 py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+        <div class="card card-nature shadow-lg border-0">
+          <div class="card-header bg-cream text-center py-4">
+            <h2 class="text-dark-forest fw-bold mb-0">
+              <i class="fas fa-user-edit me-2"></i>
+              Modifier mon profil
+            </h2>
+          </div>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
+          <div class="card-body p-4">
+            <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-nature" }) do |f| %>
+              <%= f.error_notification %>
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-    <% end %>
+              <div class="mb-4">
+                <%= f.input :email,
+                    required: true,
+                    autofocus: true,
+                    label: "Adresse email",
+                    input_html: { class: "form-control form-control-lg" },
+                    wrapper_html: { class: "mb-3" } %>
 
-    <%= f.input :password,
-                hint: "leave it blank if you don't want to change it",
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :current_password,
-                hint: "we need your current password to confirm your changes",
-                required: true,
-                input_html: { autocomplete: "current-password" } %>
+                <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                  <div class="alert alert-warning border-0 bg-light-sage mt-2">
+                    <i class="fas fa-clock me-2"></i>
+                    <small>En attente de confirmation pour : <strong><%= resource.unconfirmed_email %></strong></small>
+                  </div>
+                <% end %>
+              </div>
+
+              <div class="mb-4">
+                <h6 class="text-dark-forest mb-3">
+                  <i class="fas fa-lock me-2"></i>
+                  Changer le mot de passe
+                </h6>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <%= f.input :password,
+                        label: "Nouveau mot de passe",
+                        hint: "Laissez vide pour conserver l'actuel",
+                        required: false,
+                        input_html: { autocomplete: "new-password", class: "form-control" },
+                        wrapper_html: { class: "mb-0" } %>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <%= f.input :password_confirmation,
+                        label: "Confirmer le nouveau mot de passe",
+                        required: false,
+                        input_html: { autocomplete: "new-password", class: "form-control" },
+                        wrapper_html: { class: "mb-0" } %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <%= f.input :current_password,
+                    label: "Mot de passe actuel",
+                    hint: "Requis pour confirmer les modifications",
+                    required: true,
+                    input_html: { autocomplete: "current-password", class: "form-control" },
+                    wrapper_html: { class: "mb-0" } %>
+              </div>
+
+              <div class="d-grid">
+                <%= f.button :submit, "Mettre à jour mon profil",
+                    class: "btn btn-forest btn-lg py-3" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="text-center mt-4 mb-4">
+          <%= link_to "← Retour", root_path, class: "btn btn-outline-secondary" if defined?(root_path) %>
+        </div>
+
+        <div class="card border-danger shadow-sm">
+          <div class="card-header bg-danger text-white py-3">
+            <h6 class="mb-0 text-center">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              Zone de suppression
+            </h6>
+          </div>
+          <div class="card-body p-4 bg-light">
+            <div class="text-center">
+              <h6 class="text-danger fw-bold mb-2">Supprimer définitivement mon compte</h6>
+              <p class="text-muted small mb-3">
+                <i class="fas fa-warning me-1"></i>
+                Cette action supprimera toutes vos données de façon irréversible.
+              </p>
+              <%= button_to "Supprimer mon compte",
+                  registration_path(resource_name),
+                  data: {
+                    confirm: "⚠️ ATTENTION : Voulez-vous vraiment supprimer votre compte ?\n\nCette action est DÉFINITIVE et supprimera :\n• Toutes vos données personnelles\n• Votre historique\n• Vos préférences\n\nTapez 'SUPPRIMER' pour confirmer.",
+                    turbo_confirm: "Dernière chance : êtes-vous absolument certain ?"
+                  },
+                  method: :delete,
+                  class: "btn btn-outline-danger btn-sm" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+</div>

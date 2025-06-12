@@ -1,21 +1,26 @@
 <div class="container my-5">
   <%= link_to "← Retour aux logements", flats_path, class: "btn btn-outline-secondary mb-4" %>
 
-  <h1 class="mb-3"><%= @flat.name %></h1>
-  <img src="<%= @flat.photo_url %>" alt="<%= @flat.name %>" class="img-fluid rounded shadow-sm mb-4">
+  <h1 class="mb-4 text-center fw-bold"><%= @flat.name %></h1>
 
-  <p><strong>Adresse :</strong> <%= @flat.address %></p>
-  <p><strong>Prix :</strong> <%= @flat.price_per_night %> € par nuit</p>
-  <p><strong>Note :</strong> ⭐ <%= @flat.rating %></p>
-  <p><strong>Description :</strong><br><%= @flat.description %></p>
+  <div class="text-center mb-4">
+    <img src="<%= @flat.photo_url %>" alt="<%= @flat.name %>" class="img-fluid rounded shadow" style="max-height: 400px; object-fit: cover;">
+  </div>
+
+  <div class="mb-4">
+    <p><strong>📍 Adresse :</strong> <%= @flat.address %></p>
+    <p><strong>💰 Prix :</strong> <%= @flat.price_per_night %> € par nuit</p>
+    <p><strong>⭐ Note :</strong> <%= @flat.rating %></p>
+    <p><strong>📝 Description :</strong><br><%= @flat.description %></p>
+  </div>
 
   <hr class="my-4">
 
-  <h3>Réserver cette cabane</h3>
+  <h3 class="mb-3">🛏️ Réserver cette cabane</h3>
 
   <% if @booking.errors.any? %>
     <div class="alert alert-danger">
-      <h4>Erreurs :</h4>
+      <h5>Erreurs :</h5>
       <ul>
         <% @booking.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -24,51 +29,22 @@
     </div>
   <% end %>
 
-  <!-- Injection des dates réservées dans l'HTML -->
   <div id="booking-dates" data-unavailable-dates="<%= @unavailable_dates.map(&:to_s).to_json %>"></div>
 
+  <!-- Booking Form -->
   <%= form_with model: [@flat, Booking.new], data: { turbo: true } do |f| %>
-    <div class="row g-2">
+    <div class="row g-3">
       <div class="col-md-6">
-        <%= f.label :start_date, "Date d'arrivée" %>
+        <%= f.label :start_date, "📅 Date d'arrivée" %>
         <%= f.date_field :start_date, class: "form-control", min: Date.today %>
       </div>
       <div class="col-md-6">
-        <%= f.label :end_date, "Date de départ" %>
+        <%= f.label :end_date, "📅 Date de départ" %>
         <%= f.date_field :end_date, class: "form-control", min: Date.today %>
       </div>
     </div>
-    <div class="mt-3">
-      <%= f.submit "Réserver", class: "btn btn-primary" %>
+    <div class="mt-4 text-center">
+      <%= f.submit "Réserver", class: "btn btn-primary px-5 py-2" %>
     </div>
   <% end %>
 </div>
-
-<!-- Script JavaScript pour désactiver les dates réservées -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const dateInputs = document.querySelectorAll('input[type="date"]');
-    const unavailableDiv = document.getElementById("booking-dates");
-
-    if (!unavailableDiv || dateInputs.length < 2) return;
-
-    const unavailableDates = JSON.parse(unavailableDiv.dataset.unavailableDates);
-    const unavailableStrings = unavailableDates.map(d => new Date(d).toISOString().split('T')[0]);
-
-    dateInputs.forEach(input => {
-      input.addEventListener("input", () => {
-        if (unavailableStrings.includes(input.value)) {
-          alert("❌ Cette date est déjà réservée.");
-          input.value = "";
-        }
-      });
-    });
-  });
-</script>
-
-<!-- Style indicatif -->
-<style>
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: grayscale(100%);
-  }
-</style>
