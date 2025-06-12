@@ -1,0 +1,22 @@
+<div class="container my-5">
+
+  <!-- 🔙 Bouton retour déplacé ici -->
+  <%= link_to "← Retour à la cabane", flat_path(@booking.flat), class: "btn btn-outline-primary mb-4" %>
+
+  <h1>Merci pour votre réservation ! 🎉</h1>
+
+  <div class="card mt-4 p-4 shadow-sm">
+    <h3><%= @booking.flat.name %></h3>
+    <p><strong>Adresse :</strong> <%= @booking.flat.address %></p>
+    <p><strong>Dates :</strong> du <%= @booking.start_date.strftime("%d %B %Y") %> au <%= @booking.end_date.strftime("%d %B %Y") %></p>
+
+    <% nights = (@booking.end_date - @booking.start_date).to_i %>
+    <p><strong>Nombre de nuits :</strong> <%= nights %></p>
+
+    <p><strong>Prix par nuit :</strong> <%= @booking.flat.price_per_night %> €</p>
+    <h4>Total : <%= nights * @booking.flat.price_per_night %> €</h4>
+
+    <%= button_to "Payer maintenant", "#", class: "btn btn-success mt-4", disabled: true %>
+    <p class="text-muted mt-2">🚧 Intégration paiement à venir</p>
+  </div>
+</div>

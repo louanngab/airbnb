@@ -1,0 +1,32 @@
+class Booking < ApplicationRecord
+  belongs_to :flat
+  belongs_to :user
+
+  validate :dates_are_available
+
+  private
+
+  def dates_are_available
+    # Skip if dates are missing
+    return if start_date.blank? || end_date.blank?
+
+    # 1. Conflit sur la même cabane
+    overlapping = Booking.where(flat_id: flat_id)
+                         .where.not(id: id)
+                         .where("start_date < ? AND end_date > ?", end_date, start_date)
+    if overlapping.exists?
+      errors.add(:base, "Cette cabane est déjà réservée sur ces dates.")
+    end
+
+    # 2. Conflit avec les autres réservations de l’utilisateur
+    if user
+      user_conflict = Booking.where(user_id: user.id)
+                             .where.not(flat_id: flat_id)
+                             .where("start_date < ? AND end_date > ?", end_date, start_date)
+      if user_conflict.exists?
+        errors.add(:base, "Vous avez déjà réservé une autre cabane à ces dates.")
+      end
+    end
+  end
+end
+
