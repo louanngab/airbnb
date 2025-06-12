@@ -34,7 +34,7 @@ class ReviewsController < ApplicationController
 
   def destroy
     @review.destroy
-    redirect_to experiences_flat_path(@flat), notice: "Review deleted!"
+    redirect_to pages_experiences_path, notice: "Review deleted!"
   end
 
   def index
