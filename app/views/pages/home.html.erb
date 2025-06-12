@@ -26,6 +26,8 @@
             <div class="card card-nature shadow-sm h-100">
               <% if flat.photo.attached? %>
                 <%= image_tag flat.photo, class: "card-img-top", style: "height: 220px; object-fit: cover;" %>
+              <% elsif flat.photo_url.present? %>
+                <%= image_tag flat.photo_url, class: "card-img-top", style: "height: 220px; object-fit: cover;" %>
               <% else %>
                 <div class="bg-light-sage d-flex align-items-center justify-content-center" style="height: 220px;">
                   <i class="fas fa-image text-sage-green fs-1"></i>
@@ -42,7 +44,7 @@
                     <span class="fw-bold text-forest-green"><%= flat.price_per_night %>€<small class="text-muted">/nuit</small></span>
                     <span class="text-sage-green">⭐ <%= flat.rating %></span>
                   </div>
-                  <%= link_to "Voir la cabane", flat_path(flat), class: "btn btn-forest w-100" %>
+                  <%= link_to "Voir la cabane", flat_path(flat), class: "btn btn-dark w-100" %>
                 </div>
               </div>
             </div>
@@ -53,7 +55,7 @@
   </div>
 </div>
 
-<!-- Features Section -->
+
 <div class="bg-light-sage py-5">
   <div class="container">
     <div class="row text-center">
