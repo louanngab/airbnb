@@ -1,37 +1,66 @@
-<h2>All Reviews</h2>
+<div class="container py-5">
+  <h2 class="mb-4">Tous les avis</h2>
 
-<% @reviews.each do |review| %>
-  <div class="review border p-3 rounded mb-3">
-    <p><strong><%= review.user.email %></strong> on <%= review.flat.name %></p>
-    <p><%= review.content %></p>
-    <p>Rating: <%= display_stars(review.rating) %></p>
+  <% @reviews.each do |review| %>
+    <div class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <h6 class="mb-1"><strong><%= review.user.email %></strong></h6>
+            <small class="text-muted">sur <%= review.flat.name %></small>
+          </div>
+          <div class="text-warning">
+            <%= display_stars(review.rating) %>
+          </div>
+        </div>
 
-    <% if review.user == current_user %>
-      <%= link_to "Edit", edit_flat_review_path(review.flat, review), class: "btn btn-sm btn-warning" %>
-      <%= link_to "Delete", flat_review_path(review.flat, review), data: { turbo_confirm: "Are you sure?", turbo_method: :delete }, class: "btn btn-sm btn-danger" %>
-    <% end %>
-  </div>
-<% end %>
+        <p class="mb-2"><%= review.content %></p>
 
-<% if user_signed_in? %>
-  <h3 class="mt-4">Leave a Review</h3>
-
-  <!-- To leave a review, user must select a flat first — so you need a dropdown: -->
-  <%= form_with(model: Review.new, url: reviews_path(@flat), local: true) do |form| %>
-    <div class="mb-2">
-      <%= form.label :flat_id, "Select a Flat" %>
-      <%= form.collection_select :flat_id, Flat.all, :id, :name, prompt: "Choose a flat", class: "form-control" %>
+        <% if review.user == current_user %>
+          <div class="mt-3">
+            <%= link_to "Modifier", edit_flat_review_path(review.flat, review), class: "btn btn-sm btn-outline-warning me-2" %>
+            <%= link_to "Supprimer", flat_review_path(review.flat, review),
+                data: { turbo_confirm: "Êtes-vous sûr ?", turbo_method: :delete },
+                class: "btn btn-sm btn-outline-danger" %>
+          </div>
+        <% end %>
+      </div>
     </div>
-    <div class="mb-2">
-      <%= form.label :rating %>
-      <%= form.number_field :rating, in: 1..5, class: "form-control" %>
-    </div>
-    <div class="mb-2">
-      <%= form.label :content %>
-      <%= form.text_area :content, rows: 3, class: "form-control" %>
-    </div>
-    <%= form.submit "Submit Review", class: "btn btn-primary" %>
   <% end %>
-<% else %>
-  <p>Please <%= link_to "sign in", new_user_session_path %> to leave a review.</p>
-<% end %>
+
+  <% if user_signed_in? %>
+    <div class="card mt-5">
+      <div class="card-header">
+        <h4>Laisser un avis</h4>
+      </div>
+      <div class="card-body">
+        <%= form_with(model: Review.new, url: reviews_path(@flat), local: true) do |form| %>
+          <div class="mb-3">
+            <%= form.label :flat_id, "Choisir une cabane", class: "form-label" %>
+            <%= form.collection_select :flat_id, Flat.all, :id, :name,
+                { prompt: "Choisissez une cabane" },
+                { class: "form-select" } %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :rating, "Note (1-5)", class: "form-label" %>
+            <%= form.number_field :rating, in: 1..5, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :content, "Votre avis", class: "form-label" %>
+            <%= form.text_area :content, rows: 3, class: "form-control" %>
+          </div>
+
+          <%= form.submit "Publier l'avis", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="card mt-5">
+      <div class="card-body text-center">
+        <p>Veuillez <%= link_to "vous connecter", new_user_session_path, class: "btn btn-link p-0" %> pour laisser un avis.</p>
+      </div>
+    </div>
+  <% end %>
+</div>
