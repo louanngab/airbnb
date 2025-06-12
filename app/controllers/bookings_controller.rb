@@ -10,6 +10,7 @@ class BookingsController < ApplicationController
   if @booking.save
     redirect_to flat_path(@flat), notice: "Réservation confirmée !", flash: { booking_id: @booking.id }
   else
+    @unavailable_dates = @flat.bookings.where(paid: true).flat_map { |booking| (booking.start_date..booking.end_date).to_a }
     render "flats/show", status: :unprocessable_entity
   end
 end

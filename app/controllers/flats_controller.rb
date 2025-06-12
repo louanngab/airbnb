@@ -21,7 +21,10 @@ class FlatsController < ApplicationController
   def show
     @flat = Flat.find(params[:id])
     @booking = Booking.new
+    @unavailable_dates = @flat.bookings.where(paid: true).flat_map do |booking|
+    (booking.start_date..booking.end_date).to_a
   end
+end
 
   def new
     @flat = Flat.new

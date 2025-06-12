@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_12_062607) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_12_083037) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,6 +49,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_12_062607) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "paid"
     t.index ["flat_id"], name: "index_bookings_on_flat_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
