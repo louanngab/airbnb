@@ -26,6 +26,11 @@ class FlatsController < ApplicationController
     @flat = Flat.new
   end
 
+  def experiences
+    @reviews = Review.includes(:user, :flat).order(created_at: :desc)
+  end
+
+
     private
 
   def flat_params
