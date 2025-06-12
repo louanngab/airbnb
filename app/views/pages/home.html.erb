@@ -1,30 +1,83 @@
-<div class="bg-light py-5 text-center">
+<!-- app/views/pages/home.html.erb -->
+<div class="hero-nature">
   <div class="container">
-    <h1 class="display-4 fw-bold">Trouvez votre cabane de rêve</h1>
-    <p class="lead">Un week-end insolite dans la nature vous attend.</p>
+    <h1 class="display-4 fw-bold mb-4">Trouvez votre cabane de rêve</h1>
+    <p class="lead mb-4">Un week-end insolite dans la nature vous attend.</p>
+    <%= link_to "Découvrir nos cabanes", pages_cabane_path, class: "btn btn-light btn-lg" %>
   </div>
 </div>
 
-<div class="container-fluid px-4">
-  <div class="d-flex flex-row flex-wrap justify-content-center gap-4 py-4">
-    <% if @flats.nil? || @flats.empty? %>
-      <p class="text-muted">Aucun logement trouvé.</p>
-    <% else %>
-      <% @flats.each do |flat| %>
-        <div class="card shadow-sm" style="width: 300px;">
-          <% if flat.photo.attached? %>
-            <%= image_tag flat.photo, class: "card-img-top", style: "height: 180px; object-fit: cover;" %>
-          <% end %>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title"><%= flat.name %></h5>
-            <p class="card-text text-muted mb-3">
-              <%= truncate(flat.description, length: 100, separator: ' ') %>
-            </p>
-            <%= link_to "Voir la cabane", flat_path(flat), class: "btn btn-dark mt-auto" %>
+<div class="bg-cream py-5">
+  <div class="container">
+    <h2 class="text-center text-dark-forest fw-bold mb-5">Nos cabanes coup de cœur</h2>
+
+    <div class="row g-4 justify-content-center">
+      <% if @flats.nil? || @flats.empty? %>
+        <div class="col-12">
+          <div class="card card-nature text-center p-5">
+            <h5 class="text-forest-green">Aucun logement trouvé pour le moment</h5>
+            <p class="text-muted mb-4">Revenez bientôt pour découvrir nos nouvelles cabanes !</p>
+            <%= link_to "Ajouter une cabane", new_flat_path, class: "btn btn-forest" %>
           </div>
         </div>
+      <% else %>
+        <% @flats.each do |flat| %>
+          <div class="col-md-6 col-lg-4">
+            <div class="card card-nature shadow-sm h-100">
+              <% if flat.photo.attached? %>
+                <%= image_tag flat.photo, class: "card-img-top", style: "height: 220px; object-fit: cover;" %>
+              <% else %>
+                <div class="bg-light-sage d-flex align-items-center justify-content-center" style="height: 220px;">
+                  <i class="fas fa-image text-sage-green fs-1"></i>
+                </div>
+              <% end %>
+
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-dark-forest"><%= flat.name %></h5>
+                <p class="card-text text-muted mb-3">
+                  <%= truncate(flat.description, length: 100, separator: ' ') %>
+                </p>
+                <div class="mt-auto">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="fw-bold text-forest-green"><%= flat.price_per_night %>€<small class="text-muted">/nuit</small></span>
+                    <span class="text-sage-green">⭐ <%= flat.rating %></span>
+                  </div>
+                  <%= link_to "Voir la cabane", flat_path(flat), class: "btn btn-forest w-100" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 </div>
 
+<!-- Features Section -->
+<div class="bg-light-sage py-5">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-4 mb-4">
+        <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+          <i class="fas fa-tree text-forest-green fs-2"></i>
+        </div>
+        <h5 class="text-dark-forest">En pleine nature</h5>
+        <p class="text-muted">Cabanes isolées au cœur de la forêt</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+          <i class="fas fa-shield-alt text-sage-green fs-2"></i>
+        </div>
+        <h5 class="text-dark-forest">Sécurisé</h5>
+        <p class="text-muted">Réservations protégées et assurées</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+          <i class="fas fa-heart text-forest-green fs-2"></i>
+        </div>
+        <h5 class="text-dark-forest">Expérience unique</h5>
+        <p class="text-muted">Moments inoubliables garantis</p>
+      </div>
+    </div>
+  </div>
+</div>

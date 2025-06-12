@@ -1,10 +1,119 @@
 // Define variables for your color scheme
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+// app/assets/stylesheets/config/_colors.scss
+
+
+$dark-forest: #344E41;
+$forest-green: #3A5A40;
+$sage-green: #588157;
+$light-sage: #A3B18A;
+$cream: #DAD7CD;
+
+$primary: $forest-green;
+$secondary: $sage-green;
+$success: $sage-green;
+$light: $cream;
+$dark: $dark-forest;
+
+
+.bg-dark-forest { background-color: $dark-forest !important; }
+.bg-forest-green { background-color: $forest-green !important; }
+.bg-sage-green { background-color: $sage-green !important; }
+.bg-light-sage { background-color: $light-sage !important; }
+.bg-cream { background-color: $cream !important; }
+
+.text-dark-forest { color: $dark-forest !important; }
+.text-forest-green { color: $forest-green !important; }
+.text-sage-green { color: $sage-green !important; }
+.text-light-sage { color: $light-sage !important; }
+.text-cream { color: $cream !important; }
+
+.btn-forest {
+  background-color: $forest-green;
+  border-color: $forest-green;
+  color: white;
+
+  &:hover {
+    background-color: $dark-forest;
+    border-color: $dark-forest;
+    color: white;
+  }
+}
+
+.btn-sage {
+  background-color: $sage-green;
+  border-color: $sage-green;
+  color: white;
+
+  &:hover {
+    background-color: $forest-green;
+    border-color: $forest-green;
+    color: white;
+  }
+}
+
+.btn-outline-forest {
+  border-color: $forest-green;
+  color: $forest-green;
+
+  &:hover {
+    background-color: $forest-green;
+    border-color: $forest-green;
+    color: white;
+  }
+}
+
+.card-nature {
+  background-color: $cream;
+  border: 1px solid $light-sage;
+
+  .card-header {
+    background-color: $light-sage;
+    border-bottom: 1px solid $sage-green;
+  }
+}
+
+.navbar-nature {
+  background-color: $light-sage;
+  border-bottom: 2px solid $sage-green;
+
+  .navbar-brand {
+    color: $dark-forest !important;
+    font-weight: bold;
+  }
+
+  .nav-link {
+    color: $forest-green !important;
+
+    &:hover {
+      color: $dark-forest !important;
+    }
+  }
+}
+
+.hero-nature {
+  background: $dark-forest url('https://images.wallpaperscraft.com/image/single/forest_fog_aerial_view_129318_1920x1080.jpg');
+  background-position: center;
+  background-size: cover;
+  color: white;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.form-nature {
+  .form-control {
+    border: 2px solid $light-sage;
+
+    &:focus {
+      border-color: $sage-green;
+      box-shadow: 0 0 0 0.2rem rgba(88, 129, 87, 0.25);
+    }
+  }
+
+  .form-label {
+    color: $forest-green;
+    font-weight: 600;
+  }
+}
