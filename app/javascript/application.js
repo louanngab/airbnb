@@ -1,3 +1,6 @@
+
+// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
+import "@hotwired/turbo-rails"
 // import flatpickr from "flatpickr"
 // flatpickr(".datepicker", {
 //   altInput: true,
@@ -57,3 +60,4 @@ document.addEventListener("DOMContentLoaded", () => {
   if (startDateField) disableUnavailableDates(startDateField);
   if (endDateField) disableUnavailableDates(endDateField);
 });
+
