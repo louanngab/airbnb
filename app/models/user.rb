@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :reviews, dependent: :destroy
   has_many :bookings
+
+  def stayed_flats
+    Flat.joins(:bookings).where(bookings: { user_id: id }).distinct
+  end
 end

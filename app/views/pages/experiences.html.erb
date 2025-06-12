@@ -1,6 +1,6 @@
+
 <div class="container py-5">
   <h2 class="mb-4">Tous les avis</h2>
-
   <% @reviews.each do |review| %>
     <div class="card mb-3 shadow-sm">
       <div class="card-body">
@@ -37,7 +37,7 @@
         <%= form_with(model: Review.new, url: reviews_path(@flat), local: true) do |form| %>
           <div class="mb-3">
             <%= form.label :flat_id, "Choisir une cabane", class: "form-label" %>
-            <%= form.collection_select :flat_id, Flat.all, :id, :name,
+            <%= form.collection_select :flat_id, current_user.bookings.map(&:flat).uniq, :id, :name,
                 { prompt: "Choisissez une cabane" },
                 { class: "form-select" } %>
           </div>
@@ -62,5 +62,6 @@
         <p>Veuillez <%= link_to "vous connecter", new_user_session_path, class: "btn btn-link p-0" %> pour laisser un avis.</p>
       </div>
     </div>
+
   <% end %>
 </div>
