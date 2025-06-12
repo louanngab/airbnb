@@ -1,29 +1,42 @@
-<nav class="navbar navbar-light bg-white shadow-sm py-3 mb-4">
+<!-- app/views/shared/_navbar_homepage.html.erb -->
+<nav class="navbar navbar-expand-lg navbar-nature py-3 shadow-sm">
   <div class="container d-flex justify-content-between align-items-center">
     <!-- Logo -->
-    <%= link_to image_tag("cabaneb-logo.png", height: 100), root_path, class: "navbar-brand" %>
+    <%= link_to image_tag("cabaneb-logo.png", height: 60), root_path, class: "navbar-brand" %>
 
     <!-- Zone de recherche -->
     <%= form_with url: flats_path, method: :get, local: true, class: "flex-grow-1 mx-4", style: "max-width: 600px;" do |form| %>
-      <div class="input-group rounded-pill shadow-sm overflow-hidden">
-        <%= form.search_field :query, class: "form-control border-0", placeholder: "Rechercher une destination, nom, etc..." %>
-        <button class="btn btn-dark px-3" type="submit">🔍</button>
+      <div class="input-group rounded-pill shadow-sm overflow-hidden bg-white">
+        <%= form.search_field :query, class: "form-control border-0 bg-white", placeholder: "Rechercher une destination, nom, etc...", style: "border-radius: 25px 0 0 25px;" %>
+        <button class="btn btn-forest px-4" type="submit" style="border-radius: 0 25px 25px 0;">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
     <% end %>
 
-
     <!-- Menu utilisateur -->
-    <div class="d-flex align-items-center gap-4">
-      <%= link_to "Cabane", pages_cabane_path, class: "nav-link text-dark fw-semibold" %>
-      <%= link_to "Expériences", pages_experiences_path, class: "nav-link text-dark" %>
-      <%= link_to "Services", pages_services_path, class: "nav-link text-dark" %>
-      <%= link_to "Ajouter une cabane", new_flat_path, class: "btn btn-outline-dark" %>
+    <div class="d-flex align-items-center gap-3">
+      <%= link_to "Cabanes", pages_cabane_path, class: "nav-link text-forest-green fw-semibold px-3" %>
+      <%= link_to "Expériences", pages_experiences_path, class: "nav-link text-forest-green px-3" %>
+      <%= link_to "Services", pages_services_path, class: "nav-link text-forest-green px-3" %>
 
+      <div class="vr opacity-50 mx-2" style="height: 30px;"></div>
+
+      <%= link_to "Ajouter une cabane", new_flat_path, class: "btn btn-outline-forest" %>
 
       <% if user_signed_in? %>
-        <%= link_to "Déconnexion", destroy_user_session_path, method: :delete, class: "btn btn-outline-dark" %>
+        <div class="dropdown">
+          <button class="btn btn-sage dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            <i class="fas fa-user-circle me-1"></i> Mon compte
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><%= link_to "Mon profil", edit_user_registration_path, class: "dropdown-item" %></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><%= link_to "Déconnexion", destroy_user_session_path, method: :delete, class: "dropdown-item text-danger" %></li>
+          </ul>
+        </div>
       <% else %>
-        <%= link_to "Connexion", new_user_session_path, class: "btn btn-outline-dark" %>
+        <%= link_to "Connexion", new_user_session_path, class: "btn btn-sage" %>
       <% end %>
     </div>
   </div>
