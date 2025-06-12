@@ -10,27 +10,54 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-   <%# <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
-  <% if controller_name == 'pages' && action_name == 'home' %>
-    <%= render "shared/navbar_homepage" %>
-  <% elsif devise_controller? %>
-    <%= render "shared/navbar_user" %>
-  <% else %>
-    <%= render "shared/navbar" %>
-  <% end %>
+    <% if controller_name == 'pages' && action_name == 'home' %>
+      <%= render "shared/navbar_homepage" %>
+    <% elsif devise_controller? %>
+      <%= render "shared/navbar_user" %>
+    <% else %>
+      <%= render "shared/navbar" %>
+    <% end %>
 
-  <%= yield %>
-</body>
+    <div id="flash_messages"></div>
+    <%= yield %>
+
+    <!-- ✅ SweetAlert pour flash notice avec lien vers page de paiement -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if notice && flash[:booking_id] %>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          Swal.fire({
+            title: 'Succès 🎉',
+            text: "<%= j notice %>",
+            icon: 'success',
+            confirmButtonText: 'Procéder au paiement',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "<%= booking_confirmation_path(flash[:booking_id]) %>";
+            }
+          });
+        });
+      </script>
+    <% elsif notice %>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          Swal.fire({
+            title: 'Succès 🎉',
+            text: "<%= j notice %>",
+            icon: 'success',
+            confirmButtonText: 'Fermer'
+          });
+        });
+      </script>
+    <% end %>
+  </body>
 </html>
