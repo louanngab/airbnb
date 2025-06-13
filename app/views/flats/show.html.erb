@@ -7,6 +7,17 @@
     <img src="<%= @flat.photo_url %>" alt="<%= @flat.name %>" class="img-fluid rounded shadow" style="max-height: 400px; object-fit: cover;">
   </div>
 
+  <!-- Interior photos section -->
+  <h3 class="mb-3">📸 Photos intérieures</h3>
+
+  <div class="d-flex flex-wrap justify-content-center mb-4">
+    <% @flat.interior_photo_urls.each do |url| %>
+      <a href="<%= url %>" target="_blank" rel="noopener noreferrer">
+        <img src="<%= url %>" alt="Photo intérieure de <%= @flat.name %>" class="interior-photo shadow" />
+      </a>
+    <% end %>
+  </div>
+
   <div class="mb-4">
     <p><strong>📍 Adresse :</strong> <%= @flat.address %></p>
     <p><strong>💰 Prix :</strong> <%= @flat.price_per_night %> € par nuit</p>
@@ -48,3 +59,19 @@
     </div>
   <% end %>
 </div>
+
+<!-- Inline CSS for uniform interior photo thumbnails -->
+<style>
+  .interior-photo {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .interior-photo:hover {
+    transform: scale(1.05);
+  }
+</style>
