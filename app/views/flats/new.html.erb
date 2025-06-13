@@ -38,6 +38,13 @@
         <%= f.input :photo_url,
                     label: "URL de la photo (optionnel)",
                     input_html: { class: "form-control" } %>
+
+        <hr class="my-4">
+
+        <%= f.input :photos,
+                    as: :file,
+                    label: "Photos d'intérieur (plusieurs fichiers possibles)",
+                    input_html: { multiple: true, class: "form-control", direct_upload: true } %>
       </div>
     </div>
 

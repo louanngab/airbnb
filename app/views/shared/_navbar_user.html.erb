@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+<nav class="navbar navbar-expand-lg navbar-nature bg-nature mb-4 py-3 shadow-sm">
   <div class="container">
     <%= link_to "My CabaneB", root_path, class: "navbar-brand" %>
 
@@ -6,7 +6,7 @@
       <ul class="navbar-nav">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to "Déconnexion", destroy_user_session_path, method: :delete, class: "nav-link" %>
+            <%= link_to "Déconnexion", destroy_user_session_path, method: :delete, class: "nav-link fw-bold" %>
           </li>
         <% else %>
           <li class="nav-item">

@@ -17,14 +17,16 @@ class FlatsController < ApplicationController
     end
   end
 
-
   def show
     @flat = Flat.find(params[:id])
     @booking = Booking.new
+
     @unavailable_dates = @flat.bookings.where(paid: true).flat_map do |booking|
-    (booking.start_date..booking.end_date).to_a
+      (booking.start_date..booking.end_date).to_a
+    end
+
+    @reviews = @flat.reviews.includes(:user).order(created_at: :desc)
   end
-end
 
   def new
     @flat = Flat.new
@@ -33,6 +35,7 @@ end
   def experiences
     @reviews = Review.includes(:user, :flat).order(created_at: :desc)
   end
+
 
 def owner_bookings
   @flat = Flat.find(params[:id])
@@ -43,9 +46,10 @@ def owner_bookings
   end
 end
 
-    private
+
+  private
 
   def flat_params
-    params.require(:flat).permit(:name, :address, :price, :description)
+    params.require(:flat).permit(:name, :address, :description, :price_per_night, :rating, :photo, :photo_url, photos: [])
   end
 end
