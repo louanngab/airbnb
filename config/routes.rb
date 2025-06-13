@@ -15,8 +15,6 @@ Rails.application.routes.draw do
   # get "pages/flats", to: "pages#flats"
   devise_for :users
 
-  resources :reviews, only: [:create]
-
   resources :flats do
     resources :reviews, only: [:index, :show, :edit, :update, :destroy]
     resources :bookings, only: :create
