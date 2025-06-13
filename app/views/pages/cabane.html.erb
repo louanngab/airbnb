@@ -5,13 +5,14 @@
     <% @flats.each do |flat| %>
       <div class="col">
         <div class="card shadow-sm h-100">
-          <% if flat.photo.attached? %>
-            <%= image_tag flat.photo.variant(resize_to_limit: [800, 400]), class: "card-img-top" %>
+          <% if flat.photos.attached? %>
+            <%= image_tag flat.photos.first.variant(resize_to_limit: [800, 400]), class: "card-img-top" %>
           <% elsif flat.photo_url.present? %>
             <%= image_tag flat.photo_url, class: "card-img-top" %>
           <% else %>
             <%= image_tag "placeholder.jpg", class: "card-img-top" %>
           <% end %>
+
           <div class="card-body d-flex flex-column">
             <h5 class="card-title"><%= flat.name %></h5>
             <div class="mt-auto">
