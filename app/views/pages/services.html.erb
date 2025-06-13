@@ -1,8 +1,8 @@
 <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
   <div class="container my-5">
-    <h1 class="mb-4 fw-bold text-center">Nos services:</h1>
+    <h1 class="mb-4 fw-bold text-center">Nos services :</h1>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+    <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center mb-5">
       <div class="col">
         <div class="card h-100 text-center p-4 shadow-sm">
           <i class="bi bi-shield-check fs-1 text-primary mb-3"></i>
@@ -27,5 +27,32 @@
         </div>
       </div>
     </div>
+
+    <!-- Formulaire de contact -->
+    <div class="card shadow-sm p-4">
+      <h3 class="mb-4 text-center">Une question ? Contactez-nous 👇</h3>
+      <%= form_with url: "#", method: :post, local: true do |f| %>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <%= f.label :name, "Nom", class: "form-label" %>
+            <%= f.text_field :name, class: "form-control", placeholder: "Votre nom" %>
+          </div>
+          <div class="col-md-6">
+            <%= f.label :email, "Email", class: "form-label" %>
+            <%= f.email_field :email, class: "form-control", placeholder: "Votre email" %>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :message, "Message", class: "form-label" %>
+          <%= f.text_area :message, class: "form-control", rows: 4, placeholder: "Votre message..." %>
+        </div>
+
+        <div class="text-center">
+          <%= f.submit "Envoyer", class: "btn btn-primary px-5" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
+
