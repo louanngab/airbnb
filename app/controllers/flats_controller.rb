@@ -2,7 +2,10 @@ class FlatsController < ApplicationController
   def index
     if params[:query].present?
       query = "%#{params[:query]}%"
-      @flats = Flat.where("name ILIKE ? OR address ILIKE ?", query, query)
+      @flats = Flat.where(
+      "unaccent(name::text) ILIKE unaccent(?::text) OR unaccent(address::text) ILIKE unaccent(?::text)",
+      query, query
+    )
     else
       @flats = Flat.all
     end
@@ -36,16 +39,14 @@ class FlatsController < ApplicationController
     @reviews = Review.includes(:user, :flat).order(created_at: :desc)
   end
 
-
-def owner_bookings
-  @flat = Flat.find(params[:id])
-  if @flat.user == current_user
-    @bookings = @flat.bookings.includes(:user)
-  else
-    redirect_to root_path, alert: "Accès non autorisé"
+  def owner_bookings
+    @flat = Flat.find(params[:id])
+    if @flat.user == current_user
+      @bookings = @flat.bookings.includes(:user)
+    else
+      redirect_to root_path, alert: "Accès non autorisé"
+    end
   end
-end
-
 
   private
 

@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_13_082522) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_13_105817) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "unaccent"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -65,8 +66,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_13_082522) do
     t.string "photo_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
     t.text "interior_photo_urls"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_flats_on_user_id"
   end
 

@@ -5,8 +5,13 @@ class PagesController < ApplicationController
   end
 
   def cabane
-    @flats = Flat.all
+    if params[:query].present?
+      @flats = Flat.where("unaccent(name) ILIKE unaccent(?)", "%#{params[:query]}%")
+    else
+      @flats = Flat.all
+    end
   end
+
 
   def experiences
     @reviews = Review.includes(:user, :flat).order(created_at: :desc)
