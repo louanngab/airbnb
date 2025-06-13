@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   resources :flats do
     resources :reviews, only: [:index, :show, :edit, :update, :destroy]
-    resources :bookings, only: :create
+    resources :bookings, only: [:new, :create]
   end
 
   # (PWA - désactivé pour l’instant)
