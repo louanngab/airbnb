@@ -1,0 +1,48 @@
+<h2 class="mb-4">Mes réservations</h2>
+<% if @my_bookings.any? %>
+  <ul class="list-group mb-5">
+    <% @my_bookings.each do |booking| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          📍 <strong><%= booking.flat.name %></strong> - du <%= booking.start_date %> au <%= booking.end_date %>
+          (<%= booking.status.capitalize %>)
+        </div>
+
+        <% if booking.pending? && booking.start_date > 48.hours.from_now.to_date %>
+          <%= button_to "Annuler", cancel_booking_path(booking), method: :patch, class: "btn btn-outline-danger btn-sm" %>
+        <% elsif booking.pending? %>
+          <span class="text-muted small">Annulation impossible (moins de 48h)</span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Tu n’as encore réservé aucune cabane.</p>
+<% end %>
+
+<h2 class="mb-4">Réservations reçues sur mes cabanes</h2>
+<% if @received_bookings.any? %>
+  <ul class="list-group">
+    <% @received_bookings.each do |booking| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          👤 <%= booking.user.email %> a réservé <strong><%= booking.flat.name %></strong>
+          du <%= booking.start_date %> au <%= booking.end_date %>
+          (<%= booking.status.capitalize %>)
+        </div>
+
+        <% if booking.pending? %>
+          <div class="btn-group">
+            <%= button_to "Accepter", accept_booking_path(booking), method: :patch, class: "btn btn-success btn-sm" %>
+            <%= button_to "Refuser", reject_booking_path(booking), method: :patch, class: "btn btn-danger btn-sm" %>
+          </div>
+        <% else %>
+          <span class="badge bg-secondary"><%= booking.status.capitalize %></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucune réservation reçue pour l’instant.</p>
+<% end %>
+
