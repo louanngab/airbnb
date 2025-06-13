@@ -16,6 +16,9 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  resources :reviews, only: [:create]
+
+
   resources :flats do
     resources :reviews, only: [:index, :show, :edit, :update, :destroy]
     resources :bookings, only: :create
