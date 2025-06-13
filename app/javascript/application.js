@@ -60,4 +60,3 @@ document.addEventListener("DOMContentLoaded", () => {
   if (startDateField) disableUnavailableDates(startDateField);
   if (endDateField) disableUnavailableDates(endDateField);
 });
-

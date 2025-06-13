@@ -73,3 +73,5 @@ gem 'cloudinary', '~> 1.19.0'
 
 gem "devise"
 gem "flatpickr"
+gem "geocoder"
+

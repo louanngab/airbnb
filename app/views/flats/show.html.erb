@@ -14,6 +14,12 @@
     <p><strong>📝 Description :</strong><br><%= @flat.description %></p>
   </div>
 
+  <!-- Mapbox -->
+  <div class="mb-4">
+    <h3 class="mb-3">🗺️ Localisation</h3>
+    <div id="map" style="height: 400px; width: 100%;" class="rounded shadow"></div>
+  </div>
+
   <hr class="my-4">
 
   <h3 class="mb-3">🛏️ Réserver cette cabane</h3>
@@ -48,3 +54,93 @@
     </div>
   <% end %>
 </div>
+
+
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    mapboxgl.accessToken = '<%= ENV['MAPBOX_ACCESS_TOKEN'] %>';
+
+
+    console.log('Mapbox token:', mapboxgl.accessToken ? 'Token loaded' : 'No token found');
+
+    if (!mapboxgl.accessToken || mapboxgl.accessToken === '') {
+      document.getElementById('map').innerHTML = '<div class="alert alert-danger text-center">Token Mapbox manquant. Vérifiez votre configuration.</div>';
+      return;
+    }
+
+    const latitude = <%= @flat.latitude || 'null' %>;
+    const longitude = <%= @flat.longitude || 'null' %>;
+    const address = '<%= j(@flat.address) %>';
+
+    console.log('Flat coordinates:', { latitude, longitude });
+    console.log('Address:', address);
+
+    if (latitude && longitude) {
+      console.log('Using stored coordinates');
+      initializeMap(longitude, latitude);
+    } else if (address) {
+      console.log('Geocoding address:', address);
+      document.getElementById('map').innerHTML = '<div class="text-center p-4">🗺️ Localisation en cours...</div>';
+
+      fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${mapboxgl.accessToken}&limit=1`)
+        .then(response => response.json())
+        .then(data => {
+          console.log('Geocoding response:', data);
+
+          if (data.features && data.features.length > 0) {
+            const [lng, lat] = data.features[0].center;
+            console.log('Geocoded coordinates:', { lat, lng });
+            initializeMap(lng, lat);
+          } else {
+            document.getElementById('map').innerHTML = '<div class="alert alert-warning text-center">Impossible de localiser cette adresse: ' + address + '</div>';
+          }
+        })
+        .catch(error => {
+          console.error('Geocoding error:', error);
+          document.getElementById('map').innerHTML = '<div class="alert alert-danger text-center">Erreur lors de la géolocalisation</div>';
+        });
+    } else {
+      document.getElementById('map').innerHTML = '<div class="alert alert-warning text-center">Aucune adresse disponible</div>';
+    }
+
+    function initializeMap(lng, lat) {
+      try {
+        const map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/streets-v12',
+          center: [lng, lat],
+          zoom: 15
+        });
+
+        const marker = new mapboxgl.Marker({
+          color: '#dc3545'
+        })
+        .setLngLat([lng, lat])
+        .setPopup(
+          new mapboxgl.Popup({ offset: 25 })
+            .setHTML(`
+              <div class="text-center">
+                <h6><%= j(@flat.name) %></h6>
+                <p class="mb-1"><small><%= j(@flat.address) %></small></p>
+                <p class="mb-0"><strong><%= @flat.price_per_night %>€/nuit</strong></p>
+              </div>
+            `)
+        )
+        .addTo(map);
+
+        map.addControl(new mapboxgl.NavigationControl());
+
+        map.addControl(new mapboxgl.FullscreenControl());
+
+        console.log('Map initialized successfully');
+
+      } catch (error) {
+        console.error('Error initializing map:', error);
+        document.getElementById('map').innerHTML = '<div class="alert alert-danger text-center">Erreur lors de l\'initialisation de la carte</div>';
+      }
+    }
+  });
+</script>
