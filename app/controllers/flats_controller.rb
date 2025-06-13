@@ -36,6 +36,17 @@ class FlatsController < ApplicationController
     @reviews = Review.includes(:user, :flat).order(created_at: :desc)
   end
 
+
+def owner_bookings
+  @flat = Flat.find(params[:id])
+  if @flat.user == current_user
+    @bookings = @flat.bookings.includes(:user)
+  else
+    redirect_to root_path, alert: "Accès non autorisé"
+  end
+end
+
+
   private
 
   def flat_params

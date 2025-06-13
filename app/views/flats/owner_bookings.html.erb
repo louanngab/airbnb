@@ -1,0 +1,45 @@
+<div class="container my-5">
+  <h2>Réservations pour <%= @flat.name %></h2>
+
+  <% if @bookings.empty? %>
+    <p>Aucune réservation pour ce logement.</p>
+  <% else %>
+    <table class="table table-bordered mt-4">
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Dates</th>
+          <th>Statut</th>
+          <th>Commentaire (si rejet)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @bookings.each do |booking| %>
+          <tr>
+            <td><%= booking.user.email %></td>
+            <td><%= booking.start_date.strftime('%d/%m/%Y') %> - <%= booking.end_date.strftime('%d/%m/%Y') %></td>
+            <td><%= booking.status %></td>
+            <td><%= booking.owner_comment if booking.rejected? %></td>
+            <td>
+              <% if booking.pending? %>
+                <%= form_with url: booking_path(booking), method: :patch, local: true do |f| %>
+                  <%= f.hidden_field :status, value: "accepted" %>
+                  <%= f.submit "Accepter", class: "btn btn-success btn-sm" %>
+                <% end %>
+
+                <%= form_with url: booking_path(booking), method: :patch, local: true do |f| %>
+                  <%= f.hidden_field :status, value: "rejected" %>
+                  <%= f.text_field :owner_comment, placeholder: "Motif du refus", class: "form-control mb-1" %>
+                  <%= f.submit "Refuser", class: "btn btn-danger btn-sm" %>
+                <% end %>
+              <% else %>
+                <em>Aucune action</em>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

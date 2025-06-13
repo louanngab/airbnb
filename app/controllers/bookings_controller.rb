@@ -15,13 +15,65 @@ class BookingsController < ApplicationController
   end
 end
 
-def confirmation
+  def confirmation
   @booking = Booking.find(params[:id])
+  end
+
+  def update
+  @booking = Booking.find(params[:id])
+
+  if @booking.flat.user != current_user
+    redirect_to root_path, alert: "Accès interdit"
+    return
+  end
+
+  if @booking.update(booking_params)
+    redirect_to owner_bookings_flat_path(@booking.flat), notice: "Réservation mise à jour"
+  else
+    redirect_to owner_bookings_flat_path(@booking.flat), alert: "Erreur lors de la mise à jour"
+  end
+end
+
+  def dashboard
+    @my_bookings = current_user.bookings.includes(:flat)
+    @received_bookings = Booking.joins(:flat).where(flats: { user_id: current_user.id }).includes(:user, :flat)
+  end
+
+  def accept
+    authorize_owner!
+    @booking.update(status: :accepted)
+    redirect_to dashboard_bookings_path, notice: "Réservation acceptée."
+  end
+
+    def rejected
+    authorize_owner!
+    @booking.update(status: :rejected)
+    redirect_to dashboard_bookings_path, alert: "Réservation refusée."
+  end
+  
+def cancel
+  @booking = Booking.find(params[:id])
+  if @booking.user == current_user && @booking.pending? && @booking.start_date > 48.hours.from_now.to_date
+    @booking.update(status: :cancelled)
+    redirect_to dashboard_bookings_path, notice: "Réservation annulée avec succès."
+  else
+    redirect_to dashboard_bookings_path, alert: "Impossible d'annuler cette réservation."
+  end
 end
 
   private
 
   def booking_params
     params.require(:booking).permit(:start_date, :end_date)
+  end
+
+  def set_booking
+    @booking = Booking.find(params[:id])
+  end
+
+  def authorize_owner!
+    unless @booking.flat.user == current_user
+      redirect_to root_path, alert: "Action non autorisée."
+    end
   end
 end

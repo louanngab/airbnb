@@ -31,6 +31,7 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
             <li><%= link_to "Mon profil", edit_user_registration_path, class: "dropdown-item" %></li>
+            <li><%= link_to "Mes réservations", dashboard_bookings_path, class: "dropdown-item" %></li>
             <li><hr class="dropdown-divider"></li>
             <li>
               <%= button_to "Déconnexion", destroy_user_session_path,
