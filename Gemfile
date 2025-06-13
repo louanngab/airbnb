@@ -69,5 +69,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
+gem 'cloudinary', '~> 1.19.0'
+
 gem "devise"
 gem "flatpickr"
