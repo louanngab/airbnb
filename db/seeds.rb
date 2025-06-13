@@ -72,7 +72,8 @@ Flat.create!(
   address: "Vallée de la Loire, France",
   price_per_night: 90,
   rating: 4.7,
-  description: "Une cabane tranquille avec un accès direct à la rivière, parfait pour se détendre."
+  description: "Une cabane tranquille avec un accès direct à la rivière, parfait pour se détendre.",
+  user: owner2
 )
 
 Flat.create!(
@@ -86,7 +87,8 @@ Flat.create!(
   address: "Massif Central, France",
   price_per_night: 75,
   rating: 4.6,
-  description: "Charmante cabane rustique au cœur des montagnes, ambiance chaleureuse garantie."
+  description: "Charmante cabane rustique au cœur des montagnes, ambiance chaleureuse garantie.",
+  user: owner2
 )
 
 Flat.create!(
@@ -99,7 +101,8 @@ Flat.create!(
   address: "Côte d'Azur, France",
   price_per_night: 130,
   rating: 4.9,
-  description: "Profitez de la vue sur la mer dans cette cabane confortable et moderne."
+  description: "Profitez de la vue sur la mer dans cette cabane confortable et moderne.",
+  user: owner2
 )
 
 puts "Flats created!"
@@ -147,4 +150,3 @@ Booking.create!(
 )
 
 puts" EVERYTHING CREATED"
-
